@@ -1,0 +1,17 @@
+button{
+    border: 0px;
+    background: none;
+    background-color: gainsboro;
+    box-shadow: none;
+    border-radius: 0px;
+    font-size: 30px;
+    font-family: 'WaltographRegular';
+    display: inline;
+    
+}
+
+div{
+    font-family: 'WaltographRegular';
+    font-size: 30px;
+    display: inline;
+}
