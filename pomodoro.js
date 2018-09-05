@@ -25,6 +25,7 @@ function main() {
 } */
 
 var timer = 25*60;
+var breakTime = 5*60;
 
 
 function main(){
@@ -44,6 +45,37 @@ function updateTime(){
     var min = Math.floor(timer/60);
     var secs = Math.floor(timer %((1000*60)/1000));
     document.getElementById("timer").innerHTML = min + "m" + secs + "s";
+}
+
+function listenerSetup(){
+    document.getElementById("timeDown").addEventListener("click",onClick("timeDown"));
+    document.getElementById("timeUp").addEventListener("click",onClick("timeUP"));
+    document.getElementById("breakDown").addEventListener("click",onClick("breakDown"));
+    document.getElementById("breakUp").addEventListener("click",onClick("breakUp"));
+}
+
+function onClick(button){
+    switch (button){
+        case "timeDown" :
+        timer = time - 60
+        updateTime();
+        break;
+
+        case "timeUp" :
+        timer = timer + 60;
+        updateTime();
+        break;
+        
+        case "breakDown" :
+        breakTime = breakTime - 60;
+        updateTime();
+        break;
+
+        case "breakUp" :
+        breakUp = breakUp + 60;
+        updateTime();
+        break;
+    }
 }
 
 
