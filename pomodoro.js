@@ -26,38 +26,78 @@ function main() {
 
 var timer = 25*60;
 var breakTime = 5*60;
+var isPaused;
+var running;
+var isTimerRunning;
+var canRunTimer = true;
+var canRunBreak = true;
 
-
-function main(){
-    updateTime();
-    beginCountdown();
+function beginCountdown(isTimer){
+        isPaused = false;
+        if(isTimer && canRunTimer){
+            runTime();
+            canRunTimer = false;
+        } else if (canRunBreak) {
+            runBreak();
+            canRunBreak = false;
+        }
+    
 }
-function beginCountdown(){
-    setInterval( function(){
-        timer --;
-        updateTime();
-    }, 1000);
+
+function runTime(){
+    isTimerRunning = true;
+    running = setInterval( 
+        function(){
+            timer --;
+            updateTime();
+        }, 1000);
+}
+
+function runBreak(){
+    isTimerRunning = false; 
+    running = setInterval( 
+        function(){
+            breakTime --;
+            updateTime();
+        }, 1000);
 
 }
+
 
 function updateTime(){
     //calculates time
+
+    //displays regular time
     var min = Math.floor(timer/60);
     var secs = Math.floor(timer %((1000*60)/1000));
     document.getElementById("timer").innerHTML = min + "m" + secs + "s";
+
+    //displays break time
+    var bMin = Math.floor(breakTime/60);
+    var bSec = Math.floor(breakTime%((1000*60)/1000));
+    document.getElementById("breakTime").innerHTML = bMin + "m" + bSec + "s";
 }
 
 function listenerSetup(){
-    document.getElementById("timeDown").addEventListener("click",onClick("timeDown"));
-    document.getElementById("timeUp").addEventListener("click",onClick("timeUP"));
-    document.getElementById("breakDown").addEventListener("click",onClick("breakDown"));
-    document.getElementById("breakUp").addEventListener("click",onClick("breakUp"));
+    //add the 4 event listeners
+    document.getElementById("timeDown").addEventListener("click", function(){
+        onClick("timeDown")});
+    document.getElementById("timeUp").addEventListener("click", function(){ 
+        onClick("timeUp")});
+    document.getElementById("breakDown").addEventListener("click", function(){
+        onClick("breakDown")});
+    document.getElementById("breakUp").addEventListener("click", function(){
+        onClick("breakUp")});
+    document.getElementById("stop").addEventListener("click", function(){
+        onClick("stop")});
+    document.getElementById("reset").addEventListener("click", function(){
+        onClick("reset")});
 }
 
 function onClick(button){
     switch (button){
         case "timeDown" :
-        timer = time - 60
+        timer = timer - 60;
         updateTime();
         break;
 
@@ -72,10 +112,39 @@ function onClick(button){
         break;
 
         case "breakUp" :
-        breakUp = breakUp + 60;
+        breakTime = breakTime + 60;
         updateTime();
         break;
+
+        case "stop" :
+        if(isPaused){
+            //resume
+            isRunning = true;
+            beginCountdown(isTimerRunning);
+            document.getElementById("stop").innerHTML = "Pause";
+        } else {
+            //pause
+            clearInterval(running);
+            document.getElementById("stop").innerHTML = "Resume";
+            isPaused = true
+
+            if(isTimerRunning){
+                canRunTimer = true;
+            } else {
+                canRunBreak = true;
+            }
+        }
+        break; 
+
     }
 }
+
+function quickSetup(){
+    listenerSetup();
+    updateTime();
+}
+
+
+window.onload = quickSetup();
 
 

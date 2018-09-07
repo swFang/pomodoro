@@ -7,16 +7,24 @@
         <link type = "text/css" rel="stylesheet" href="pomodoro.css">
 </head>
 <body>
-    <button type = "button" onclick="main()"> Study </button>
-    <button id = "pause"> Break </button>
-    <button id = "timeDown"> < </button>
-    <div id="timer">  </div>
-    <button id = "timeUp"> > </button>  
-    <button id = "breakDown"> < </button>
-    <button id = "breakUP"> > </button>  
-
-    <button> pause </button>
-    <button> reset </button>
+    <div id = "container">
+        <button type = "button" onclick="beginCountdown(true)"> Study </button>
+        <button id = "pause" onclick="beginCountdown(false)"> Break </button>
+        <br>
+       
+        <button id = "timeDown"> < </button>
+        <div id= "timer">  </div>
+        <button id = "timeUp"> > </button>  
+        <br>
+        
+        <button id = "breakDown"> < </button>
+        <div id = "breakTime">   </div>
+        <button id = "breakUp"> > </button>  
+        <br>
+        
+        <button id = "stop"> pause </button>
+        <button id = "reset"> reset </button>
+    </div>
 
 
 
